@@ -1,9 +1,5 @@
 import { LightningElement, wire, track, api } from 'lwc';
 import getSimilarCases from '@salesforce/apex/SimilarCasesController.getSimilarCases';
-// import SUBJECT_FIELD from '@salesforce/schema/Case.Subject';
-// import CASE_NUMBER_FIELD from '@salesforce/schema/Case.CaseNumber';
-// import PARENT_CASE_NUMBER_FIELD from '@salesforce/schema/Case.Parent_Case_Number__c';
-// import DESCRIPTION_FIELD from '@salesforce/schema/Case.Description';
 
 const COLS = [
   { label: 'Case Number', fieldName: 'caseUrl', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}}, target : '_blank'},
