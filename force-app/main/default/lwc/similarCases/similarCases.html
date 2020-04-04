@@ -1,16 +1,23 @@
 <template>
   <lightning-card>
+    <template if:true={noSimilarCases}>
+      <lightning-formatted-text>No Similar Cases Found</lightning-formatted-text>
+    </template>
+    <template if:false={noSimilarCases}>
       <lightning-datatable 
+      title="Found Similar Cases"
       key-field="id" 
       data={similarCases} 
       columns={columns}>
       </lightning-datatable>
-    <div>
+    </template>
+    <template if:false={noParentSimilarCases}>]
       <lightning-datatable 
+      title="Similar Cases Parents"
       key-field="id" 
       data={parentSimilarCases} 
       columns={columns}>
       </lightning-datatable>
-    </div>
+    </template>
   </lightning-card>
 </template>

@@ -14,6 +14,8 @@ export default class SimilarCases extends LightningElement {
   @api recordId = null;
   @track similarCases = [];
   @track parentSimilarCases = [];
+  @track noSimilarCases = true;
+  @track noParentSimilarCases = true;
 
   @wire(getSimilarCases, { recordId: '$recordId' }) 
   wiredCases(result){
@@ -21,20 +23,27 @@ export default class SimilarCases extends LightningElement {
     if(data){
       let caseUrl;
       let parentUrl = null;
-      this.similarCases = data.similarCases.map(c => {
-        caseUrl = `/${c.Id}`;
-        if(c.ParentId) {
-          parentUrl = `/${c.ParentId}`;
-        }
-        return {...c, caseUrl, parentUrl}
-      })
-      this.parentSimilarCases = data.parentSimilarCases.map(c => {
-        caseUrl = `/${c.Id}`;
-        if(c.ParentId){
-          parentUrl = `/${c.ParentId}`;
-        }
-        return {...c, caseUrl, parentUrl}
-      })
+      if(data.similarCases.length !== 0){
+        this.similarCases = data.similarCases.map(c => {
+          caseUrl = `/${c.Id}`;
+          if(c.ParentId) {
+            parentUrl = `/${c.ParentId}`;
+          }
+          return {...c, caseUrl, parentUrl}
+        })
+        this.noSimilarCases = false;
+      } 
+      console.log(data.parentSimilarCases);
+      if(data.parentSimilarCases.length() !== 0){
+        this.parentSimilarCases = data.parentSimilarCases.map(c => {
+          caseUrl = `/${c.Id}`;
+          if(c.ParentId){
+            parentUrl = `/${c.ParentId}`;
+          }
+          return {...c, caseUrl, parentUrl}
+        }) 
+        this.noParentSimilarCases = false;
+      } 
       this.error = null;
     }
     if(error){

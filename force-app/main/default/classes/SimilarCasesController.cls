@@ -1,6 +1,7 @@
 public with sharing class SimilarCasesController {
     @AuraEnabled(cacheable=true)
     public static Map<String, List<Case>> getSimilarCases(String recordId){
+        // todo- add first 15
         Case originalCase = [SELECT Id, Subject, Subject_No_Loop_Protection__c, ParentId FROM Case WHERE Id = :recordId LIMIT 1];
         String subjectSearch = '%' + originalCase.Subject + '%';
         Map<String,Case[]> foundCases = new Map<String,Case[]>(); 
