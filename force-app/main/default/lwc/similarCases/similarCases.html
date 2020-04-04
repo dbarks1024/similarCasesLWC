@@ -1,3 +1,16 @@
 <template>
-    
+  <lightning-card>
+      <lightning-datatable 
+      key-field="id" 
+      data={similarCases} 
+      columns={columns}>
+      </lightning-datatable>
+    <div>
+      <lightning-datatable 
+      key-field="id" 
+      data={parentSimilarCases} 
+      columns={columns}>
+      </lightning-datatable>
+    </div>
+  </lightning-card>
 </template>
