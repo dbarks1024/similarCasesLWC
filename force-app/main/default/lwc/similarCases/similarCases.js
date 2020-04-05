@@ -11,6 +11,7 @@ const COLS = [
 export default class SimilarCases extends LightningElement {
   @track error;
   @track columns = COLS;
+  @track activeSections = ['similarCases', 'parentSimilarCases'];
   @api recordId = null;
   @track similarCases = [];
   @track parentSimilarCases = [];
