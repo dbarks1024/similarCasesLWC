@@ -21,31 +21,12 @@ export default class SimilarCases extends LightningElement {
   wiredCases(result){
     const { data, error } = result;
     if(data){
-      let caseUrl;
-      let parentUrl = null;
-      let parentCaseNumber = null;
       if(data.similarCases.length > 0){
-        this.similarCases = data.similarCases.map(c => {
-          caseUrl = `/${c.Id}`;
-          if(c.ParentId) {
-            parentUrl = `/${c.ParentId}`;
-            parentCaseNumber = c.Parent.CaseNumber;
-          }
-          return {...c, caseUrl, parentUrl, parentCaseNumber}
-        })
+        this.similarCases = this.formatCases(data.similarCases);
         this.noSimilarCases = false;
-      } 
-      
+      }      
       if(data.parentSimilarCases.length > 0){
-        this.parentSimilarCases = data.parentSimilarCases.map(c => {
-          caseUrl = `/${c.Id}`;
-          if(c.ParentId){
-            parentUrl = `/${c.ParentId}`;
-            parentCaseNumber = c.Parent.CaseNumber;
-          }
-          return {...c, caseUrl, parentUrl, parentCaseNumber}
-        }) 
-        console.log(this.parentSimilarCases);
+        this.parentSimilarCases = this.formatCases(data.parentSimilarCases);
         this.noParentSimilarCases = false;
       } 
       this.error = null;
@@ -54,4 +35,18 @@ export default class SimilarCases extends LightningElement {
       this.error = error;
     }
   };
+
+  formatCases(data) {
+    let caseUrl;
+    let parentUrl = null;
+    let parentCaseNumber = null;  
+    return data.map(c => {
+      caseUrl = `/${c.Id}`;
+      if(c.ParentId) {
+        parentUrl = `/${c.ParentId}`;
+        parentCaseNumber = c.Parent.CaseNumber;
+      }
+      return {...c, caseUrl, parentUrl, parentCaseNumber}
+    }) 
+  }
 }
