@@ -4,7 +4,7 @@ import getSimilarCases from '@salesforce/apex/SimilarCasesController.getSimilarC
 const COLS = [
   { label: 'Case Number', fieldName: 'caseUrl', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}}, target : '_blank'},
   { label: 'Subject', fieldName: 'Subject'},
-  { label: 'Parent Case', fieldName: 'parentUrl', type: 'url', typeAttributes: {label: {fieldName: 'Parent.CaseNumber'}}, target : '_blank' },
+  { label: 'Parent Case', fieldName: 'parentUrl', type: 'url', typeAttributes: {label: {fieldName: 'parentCaseNumber'}}, target : '_blank' },
   { label: 'Description', fieldName: 'Description'}
 ];
 
@@ -23,25 +23,29 @@ export default class SimilarCases extends LightningElement {
     if(data){
       let caseUrl;
       let parentUrl = null;
-      if(data.similarCases.length !== 0){
+      let parentCaseNumber = null;
+      if(data.similarCases.length > 0){
         this.similarCases = data.similarCases.map(c => {
           caseUrl = `/${c.Id}`;
           if(c.ParentId) {
             parentUrl = `/${c.ParentId}`;
+            parentCaseNumber = c.Parent.CaseNumber;
           }
-          return {...c, caseUrl, parentUrl}
+          return {...c, caseUrl, parentUrl, parentCaseNumber}
         })
         this.noSimilarCases = false;
       } 
-      console.log(data.parentSimilarCases);
-      if(data.parentSimilarCases.length() !== 0){
+      
+      if(data.parentSimilarCases.length > 0){
         this.parentSimilarCases = data.parentSimilarCases.map(c => {
           caseUrl = `/${c.Id}`;
           if(c.ParentId){
             parentUrl = `/${c.ParentId}`;
+            parentCaseNumber = c.Parent.CaseNumber;
           }
-          return {...c, caseUrl, parentUrl}
+          return {...c, caseUrl, parentUrl, parentCaseNumber}
         }) 
+        console.log(this.parentSimilarCases);
         this.noParentSimilarCases = false;
       } 
       this.error = null;
