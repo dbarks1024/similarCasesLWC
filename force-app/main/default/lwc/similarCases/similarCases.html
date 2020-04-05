@@ -11,7 +11,10 @@
       columns={columns}>
       </lightning-datatable>
     </template>
-    <template if:false={noParentSimilarCases}>]
+    <template if:true={noParentSimilarCases}>
+      <lightning-formatted-text>No Similar Parent Cases Found</lightning-formatted-text>
+    </template>
+    <template if:false={noParentSimilarCases}>
       <lightning-datatable 
       title="Similar Cases Parents"
       key-field="id" 
