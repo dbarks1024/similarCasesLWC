@@ -17,8 +17,7 @@ public with sharing class SimilarCasesController {
         }
         foundCases.put('similarCases', foundSimilarCases);
         String parentCasesCriteria = 'WHERE Id IN :foundSimilarCasesParentIds AND Id != :recordId';
-        foundCases.put('parentSimilarCases', 
-            [SELECT Id, Subject, Subject_No_Loop_Protection__c, ParentId, Description, CaseNumber, Parent.CaseNumber FROM Case WHERE Id IN :foundSimilarCasesParentIds AND Id != :recordId]);
+        foundCases.put('parentSimilarCases', Database.query(baseQuery + parentCasesCriteria));
         return foundCases;
     }
 }
