@@ -1,23 +1,39 @@
 <template>
   <lightning-card>
-    <template if:true={noSimilarCases}>
-      <lightning-formatted-text>No Similar Cases Found</lightning-formatted-text>
-    </template>
-    <template if:false={noSimilarCases}>
-      <lightning-datatable 
-      title="Found Similar Cases"
-      key-field="id" 
-      data={similarCases} 
-      columns={columns}>
-      </lightning-datatable>
-    </template>
-    <template if:false={noParentSimilarCases}>]
-      <lightning-datatable 
-      title="Similar Cases Parents"
-      key-field="id" 
-      data={parentSimilarCases} 
-      columns={columns}>
-      </lightning-datatable>
-    </template>
+    <lightning-accordion
+    allow-multiple-sections-open
+    active-section-name={activeSections}
+    >
+      <lightning-accordion-section
+      name='similarCases'
+      label='Similar Cases'
+      >
+        <template if:true={noSimilarCases}>
+          <lightning-formatted-text>No Similar Cases Found</lightning-formatted-text>
+        </template>
+        <template if:false={noSimilarCases}>
+          <lightning-datatable 
+          key-field="id" 
+          data={similarCases} 
+          columns={columns}>
+          </lightning-datatable>
+        </template>
+      </lightning-accordion-section>
+      <lightning-accordion-section
+      name='parentSimilarCases'
+      label='Parent Similar Cases'
+      >
+        <template if:true={noParentSimilarCases}>
+          <lightning-formatted-text>No Similar Parent Cases Found</lightning-formatted-text>
+        </template>
+        <template if:false={noParentSimilarCases}>
+          <lightning-datatable 
+          key-field="id" 
+          data={parentSimilarCases} 
+          columns={columns}>
+          </lightning-datatable>
+        </template>
+      </lightning-accordion-section>
+    </lightning-accordion>   
   </lightning-card>
 </template>
